@@ -20,6 +20,9 @@ Manage Trello boards, lists, and cards using the `trello-cli` command.
 ```bash
 trello-cli --get-boards                              # List all boards
 trello-cli --get-lists <board-id>                    # Get lists in board
+trello-cli --get-labels <board-id>                   # List board labels (id+name) — resolve a card's idLabels here; no name lookup on --get-card
+# Card's label NAMES (filter with jq, don't dump the board):
+#   ids=$(trello-cli --get-card <card-id> | jq -r '.data.idLabels[]'); trello-cli --get-labels <board-id> | jq -r --arg ids "$ids" '.data[] | select(.id as $i | $ids | contains($i)) | .name'
 ```
 
 ### Cards
